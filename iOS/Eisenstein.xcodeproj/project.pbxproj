@@ -14,6 +14,7 @@
 		A3EC1D8A2040D01400ED3E88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3EC1D882040D01400ED3E88 /* LaunchScreen.storyboard */; };
 		A3EC1D952040D01400ED3E88 /* EisensteinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EC1D942040D01400ED3E88 /* EisensteinTests.swift */; };
 		A3EC1DA02040D01400ED3E88 /* EisensteinUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EC1D9F2040D01400ED3E88 /* EisensteinUITests.swift */; };
+		A3EC1DB02040DA6600ED3E88 /* web in Resources */ = {isa = PBXBuildFile; fileRef = A3EC1DAF2040DA6600ED3E88 /* web */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		A3EC1D9B2040D01400ED3E88 /* EisensteinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EisensteinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3EC1D9F2040D01400ED3E88 /* EisensteinUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EisensteinUITests.swift; sourceTree = "<group>"; };
 		A3EC1DA12040D01400ED3E88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A3EC1DAF2040DA6600ED3E88 /* web */ = {isa = PBXFileReference; lastKnownFileType = folder; name = web; path = Eisenstein/web; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		A3EC1D732040D01400ED3E88 = {
 			isa = PBXGroup;
 			children = (
+				A3EC1DAF2040DA6600ED3E88 /* web */,
 				A3EC1D7E2040D01400ED3E88 /* Eisenstein */,
 				A3EC1D932040D01400ED3E88 /* EisensteinTests */,
 				A3EC1D9E2040D01400ED3E88 /* EisensteinUITests */,
@@ -126,6 +129,23 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		A3EC1DB12040DA8A00ED3E88 /* CopyWebFiles */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = A3EC1DB22040DA8A00ED3E88 /* Build configuration list for PBXLegacyTarget "CopyWebFiles" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = ../;
+			dependencies = (
+			);
+			name = CopyWebFiles;
+			passBuildSettingsInEnvironment = 1;
+			productName = CopyWebFiles;
+		};
+/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		A3EC1D7B2040D01400ED3E88 /* Eisenstein */ = {
@@ -189,7 +209,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0920;
-				ORGANIZATIONNAME = LLK;
+				ORGANIZATIONNAME = "Massachusetts Institute of Technology";
 				TargetAttributes = {
 					A3EC1D7B2040D01400ED3E88 = {
 						CreatedOnToolsVersion = 9.2;
@@ -204,6 +224,10 @@
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 						TestTargetID = A3EC1D7B2040D01400ED3E88;
+					};
+					A3EC1DB12040DA8A00ED3E88 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -223,6 +247,7 @@
 				A3EC1D7B2040D01400ED3E88 /* Eisenstein */,
 				A3EC1D8F2040D01400ED3E88 /* EisensteinTests */,
 				A3EC1D9A2040D01400ED3E88 /* EisensteinUITests */,
+				A3EC1DB12040DA8A00ED3E88 /* CopyWebFiles */,
 			);
 		};
 /* End PBXProject section */
@@ -233,6 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3EC1D8A2040D01400ED3E88 /* LaunchScreen.storyboard in Resources */,
+				A3EC1DB02040DA6600ED3E88 /* web in Resources */,
 				A3EC1D872040D01400ED3E88 /* Assets.xcassets in Resources */,
 				A3EC1D852040D01400ED3E88 /* Main.storyboard in Resources */,
 			);
@@ -512,6 +538,31 @@
 			};
 			name = Release;
 		};
+		A3EC1DB32040DA8A00ED3E88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A3EC1DB42040DA8A00ED3E88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -547,6 +598,15 @@
 			buildConfigurations = (
 				A3EC1DAB2040D01400ED3E88 /* Debug */,
 				A3EC1DAC2040D01400ED3E88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A3EC1DB22040DA8A00ED3E88 /* Build configuration list for PBXLegacyTarget "CopyWebFiles" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3EC1DB32040DA8A00ED3E88 /* Debug */,
+				A3EC1DB42040DA8A00ED3E88 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

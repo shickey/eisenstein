@@ -3,7 +3,7 @@
 //  Eisenstein
 //
 //  Created by Sean Hickey on 2/23/18.
-//  Copyright © 2018 LLK. All rights reserved.
+//  Copyright © 2018 Massachusetts Institute of Technology. All rights reserved.
 //
 
 import UIKit
