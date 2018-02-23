@@ -8,7 +8,7 @@
         // Instantiate the VM and create an empty project
         var vm = new window.VirtualMachine();
         window.vm = vm;
-        window.vm.createEmptyProject();
+        // window.vm.createEmptyProject();
 
         // Get XML toolbox definition
         var toolbox = document.getElementById('toolbox');
@@ -72,51 +72,28 @@
         // DOM event handlers
         var greenFlag = document.querySelector('#greenflag');
         var stop = document.querySelector('#stop');
-        var deviceButton = document.querySelector('#device');
 
         greenFlag.addEventListener('click', function () {
             vm.greenFlag();
-            audio.stopAllSounds();
-            audio.clearEffects();
+            // audio.stopAllSounds();
+            // audio.clearEffects();
         });
         greenFlag.addEventListener('touchmove', function (e) {
             e.preventDefault();
         });
         stop.addEventListener('click', function () {
             vm.stopAll();
-            audio.stopAllSounds();
-            audio.clearEffects();
-            if (typeof window.ext !== 'undefined') {
-                window.ext.postMessage({
-                    extension: 'wedo',
-                    method: 'motorStop',
-                    args: []
-                });
-            }
+            // audio.stopAllSounds();
+            // audio.clearEffects();
+            // if (typeof window.ext !== 'undefined') {
+            //     window.ext.postMessage({
+            //         extension: 'wedo',
+            //         method: 'motorStop',
+            //         args: []
+            //     });
+            // }
         });
         stop.addEventListener('touchmove', function (e) {
-            e.preventDefault();
-        });
-
-        // device button - press to start scanning for devices
-        deviceButton.addEventListener('mousedown', function () {
-            if (deviceButton.classList.contains('scanning')) {
-                return;
-            }
-            if (deviceButton.classList.contains('connected')) {
-                return;
-            }
-
-            deviceButton.classList.add('scanning');
-            if (typeof window.ext !== 'undefined') {
-                window.ext.postMessage({
-                    extension: 'wedo',
-                    method: 'deviceButtonClicked',
-                    args: []
-                });
-            }
-        });
-        deviceButton.addEventListener('touchmove', function (e) {
             e.preventDefault();
         });
 
@@ -124,9 +101,9 @@
         bindExtensionHandler();
 
         // Audio engine
-        var audio = new AudioEngine();
-        window.audio = audio;
-        loadSoundsFromProject(135074076);
+        // var audio = new AudioEngine();
+        // window.audio = audio;
+        // loadSoundsFromProject(135074076);
     }
 
     /**
