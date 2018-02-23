@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+        <!-- Blockly -->
+        <script src="./lib/blocks/blockly_uncompressed_vertical.js"></script>
+        <script src="./lib/blocks/msg/messages.js"></script>
+        <script src="./lib/blocks/blocks_common/math.js"></script>
+        <script src="./lib/blocks/blocks_common/text.js"></script>
+        <script src="./lib/blocks/blocks_vertical/control.js"></script>
+        <script src="./lib/blocks/blocks_vertical/event.js"></script>
+        <script src="./lib/blocks/blocks_vertical/sound.js"></script>
+        <script src="./lib/blocks/blocks_vertical/operators.js"></script>
+        <script src="./lib/blocks/blocks_vertical/wedo.js"></script>
+
+        <!-- CSS Styles -->
+        <link rel="stylesheet" href="./css/normalize.css">
+        <link rel="stylesheet" href="./css/common.css">
+    </head>
+
+    <body>
+        <!-- Toolbox -->
+        <xml id="toolbox">
+            <block type="event_whenflagclicked"></block>
+
+            <block type="wedo_whendistanceclose"></block>
+
+            <block type="wedo_whentilt">
+                <value name="CHOICE">
+                    <shadow type="dropdown_wedo_whentilt" />
+                </value>
+            </block>
+
+            <block type="wedo_setcolor">
+                <value name="CHOICE">
+                    <shadow type="math_positive_number">
+                        <field name="NUM">1</field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="wedo_motorclockwise">
+                <value name="DURATION">
+                    <shadow type="math_positive_number">
+                        <field name="NUM">1</field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="wedo_motorcounterclockwise">
+                <value name="DURATION">
+                    <shadow type="math_positive_number">
+                        <field name="NUM">1</field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="wedo_motorspeed">
+                <value name="CHOICE">
+                    <shadow type="math_positive_number">
+                        <field name="NUM">50</field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="wedo_distance"></block>
+
+            <block type="wedo_tilt">
+                <value name="CHOICE">
+                    <shadow type="dropdown_wedo_tilt" />
+                </value>
+            </block>
+
+            <block type="sound_playuntildone">
+                <value name="SOUND_MENU">
+                    <shadow type="sound_sounds_menu" />
+                </value>
+            </block>
+
+            <block type="sound_seteffectto">
+                <value name="EFFECT">
+                    <shadow type="sound_effects_menu" />
+                </value>
+                <value name="VALUE">
+                    <shadow type="math_number">
+                        <field name="NUM">100</field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="sound_changeeffectby">
+                <value name="EFFECT">
+                    <shadow type="sound_effects_menu" />
+                </value>
+                <value name="VALUE">
+                    <shadow type="math_number">
+                        <field name="NUM">10</field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="sound_cleareffects"></block>
+
+            <block type="control_repeat">
+                <value name="TIMES">
+                    <shadow type="math_whole_number">
+                        <field name="NUM">4</field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="control_forever"></block>
+
+            <block type="control_wait">
+                <value name="DURATION">
+                    <shadow type="math_positive_number">
+                        <field name="NUM">1</field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="operator_add">
+                <value name="NUM1">
+                    <shadow type="math_number">
+                        <field name="NUM"></field>
+                    </shadow>
+                </value>
+                <value name="NUM2">
+                    <shadow type="math_number">
+                        <field name="NUM"></field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="operator_subtract">
+                <value name="NUM1">
+                    <shadow type="math_number">
+                        <field name="NUM"></field>
+                    </shadow>
+                </value>
+                <value name="NUM2">
+                    <shadow type="math_number">
+                        <field name="NUM"></field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="operator_multiply">
+                <value name="NUM1">
+                    <shadow type="math_number">
+                        <field name="NUM"></field>
+                    </shadow>
+                </value>
+                <value name="NUM2">
+                    <shadow type="math_number">
+                        <field name="NUM"></field>
+                    </shadow>
+                </value>
+            </block>
+
+            <block type="operator_random">
+                <value name="FROM">
+                    <shadow type="math_number">
+                        <field name="NUM">1</field>
+                    </shadow>
+                </value>
+                <value name="TO">
+                    <shadow type="math_number">
+                        <field name="NUM">100</field>
+                    </shadow>
+                </value>
+            </block>
+
+        </xml>
+
+        <!-- Blocks -->
+        <div id="blocks"></div>
+
+        <!-- Navigation -->
+        <div id="navigation">
+            <div class="device">
+                <button id="device"></button>
+            </div>
+            <div class="primary">
+                <button id="greenflag">
+                    <img src="./images/ui/greenflag.svg" />
+                </button>
+
+                <button id="stop">
+                    <img src="./images/ui/stop.svg" />
+                </button>
+            </div>
+        </div>
+
+        <!-- Libraries -->
+        <script src="./lib/audio/audio.js"></script>
+        <script src="./lib/vm/vm.js"></script>
+
+        <!-- Scripts -->
+        <script src="./js/common.js"></script>
+    </body>
+</html>
