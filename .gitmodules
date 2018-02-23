@@ -1,0 +1,9 @@
+[submodule "web/lib/closure-library"]
+	path = web/lib/closure-library
+	url = https://github.com/google/closure-library.git
+[submodule "web/lib/blocks"]
+	path = web/lib/blocks
+	url = https://github.com/shickey/scratch-blocks.git
+[submodule "web/lib/vm"]
+	path = web/lib/vm
+	url = https://github.com/shickey/scratch-vm.git
