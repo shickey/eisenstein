@@ -8,7 +8,17 @@
         // Instantiate the VM and create an empty project
         var vm = new window.VirtualMachine();
         window.vm = vm;
-        // window.vm.createEmptyProject();
+        
+        //Load Empty Project
+        var defaultProject = {
+            "objName": "Stage",
+            "sounds": [],
+            "costumes": [],
+            "currentCostumeIndex": 0,
+            "variables": [],
+            "children": []
+        }
+        vm.loadProject(defaultProject);
 
         // Get XML toolbox definition
         var toolbox = document.getElementById('toolbox');
@@ -51,23 +61,18 @@
 
         // Handle VM events
         vm.on('SCRIPT_GLOW_ON', function(data) {
-            console.log("glow stack on");
             workspace.glowStack(data.id, true);
         });
         vm.on('SCRIPT_GLOW_OFF', function(data) {
-            console.log("glow stack off");
             workspace.glowStack(data.id, false);
         });
         vm.on('BLOCK_GLOW_ON', function(data) {
-            console.log("glow block on");
             workspace.glowBlock(data.id, true);
         });
         vm.on('BLOCK_GLOW_OFF', function(data) {
-            console.log("glow block off");
             workspace.glowBlock(data.id, false);
         });
         vm.on('VISUAL_REPORT', function(data) {
-            console.log("report");
             workspace.reportValue(data.id, data.value);
         });
 
