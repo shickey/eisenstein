@@ -64,17 +64,28 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
             let ext = body.object(forKey: "extension") as? String
             let method = body.object(forKey: "method") as? String
             let args = body.object(forKey: "args") as! [AnyObject]
+            let resolveId = body.object(forKey: "resolveId") as? String
             
             // @todo Guard
             // @todo The validation for each of these should be much more strict
             // @todo Each of these should be bound in a more generic way (not in the View Contoller)
             
-            // SoundExtension
+            // Video
             if (ext == "video") {
-                if (method == "startPlayback") { print("start") }
+                if (method == "startPlayback") { 
+                    
+                    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (Timer) in
+                        self.resolvePromise(resolveId!)
+                    })
+                }
                 else if (method == "stopPlayback") { print("stop") }
             }
         }
+    }
+    
+    func resolvePromise(_ promiseId: String) {
+        print("stopping video: \(promiseId)")
+        webView!.evaluateJavaScript("resolveVideoPromise(\"\(promiseId)\")", completionHandler: nil)
     }
 
 }

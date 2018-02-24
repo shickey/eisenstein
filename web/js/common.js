@@ -108,7 +108,7 @@
         });
 
         // Extension event handlers
-        // bindExtensionHandler();
+        bindExtensionHandler();
 
         // Audio engine
         // var audio = new AudioEngine();
@@ -142,12 +142,12 @@
     //  * Binds the extension interface to `window.ext`.
     //  * @return {void}
     //  */
-    // function bindExtensionHandler () {
-    //     if (typeof webkit === 'undefined') return;
-    //     if (typeof webkit.messageHandlers === 'undefined') return;
-    //     if (typeof webkit.messageHandlers.ext === 'undefined') return;
-    //     window.ext = webkit.messageHandlers.ext;
-    // }
+    function bindExtensionHandler () {
+        if (typeof webkit === 'undefined') return;
+        if (typeof webkit.messageHandlers === 'undefined') return;
+        if (typeof webkit.messageHandlers.ext === 'undefined') return;
+        window.ext = webkit.messageHandlers.ext;
+    }
 
     // /**
     //  * Extension "connect" handler.
