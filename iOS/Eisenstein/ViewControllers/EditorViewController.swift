@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class EditorViewController: UIViewController {
+class EditorViewController: UIViewController, WKScriptMessageHandler {
 
     var webView: WKWebView!
     
@@ -20,12 +20,12 @@ class EditorViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: (0x33 / 255.0), green: (0x47 / 255.0), blue: (0x71 / 255.0), alpha: 1.0)
         
         // Create web view controller and bind to "ext" namespace (extensions)
-        //        let webViewController = WKUserContentController()
-        //        webViewController.add(self, name: "ext")
+        let webViewController = WKUserContentController()
+        webViewController.add(self, name: "ext")
         
         // Create web view configuration
         let webViewConfig = WKWebViewConfiguration()
-        //        webViewConfig.userContentController = webViewController
+        webViewConfig.userContentController = webViewController
         
         // Init webview and load editor
         webView = WKWebView(frame: self.view.frame, configuration: webViewConfig)
@@ -55,15 +55,26 @@ class EditorViewController: UIViewController {
         return true
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        // Validate
+        if (message.name != "ext") { return }
+        
+        // Map message payloads to extensions
+        if let body = message.body as? NSDictionary {
+            let ext = body.object(forKey: "extension") as? String
+            let method = body.object(forKey: "method") as? String
+            let args = body.object(forKey: "args") as! [AnyObject]
+            
+            // @todo Guard
+            // @todo The validation for each of these should be much more strict
+            // @todo Each of these should be bound in a more generic way (not in the View Contoller)
+            
+            // SoundExtension
+            if (ext == "video") {
+                if (method == "startPlayback") { print("start") }
+                else if (method == "stopPlayback") { print("stop") }
+            }
+        }
     }
-    */
 
 }

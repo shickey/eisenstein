@@ -50,19 +50,24 @@
         flyoutWorkspace.addChangeListener(vm.flyoutBlockListener);
 
         // Handle VM events
-        vm.on('STACK_GLOW_ON', function(data) {
+        vm.on('SCRIPT_GLOW_ON', function(data) {
+            console.log("glow stack on");
             workspace.glowStack(data.id, true);
         });
-        vm.on('STACK_GLOW_OFF', function(data) {
+        vm.on('SCRIPT_GLOW_OFF', function(data) {
+            console.log("glow stack off");
             workspace.glowStack(data.id, false);
         });
         vm.on('BLOCK_GLOW_ON', function(data) {
+            console.log("glow block on");
             workspace.glowBlock(data.id, true);
         });
         vm.on('BLOCK_GLOW_OFF', function(data) {
+            console.log("glow block off");
             workspace.glowBlock(data.id, false);
         });
         vm.on('VISUAL_REPORT', function(data) {
+            console.log("report");
             workspace.reportValue(data.id, data.value);
         });
 
@@ -98,7 +103,7 @@
         });
 
         // Extension event handlers
-        bindExtensionHandler();
+        // bindExtensionHandler();
 
         // Audio engine
         // var audio = new AudioEngine();
@@ -106,130 +111,130 @@
         // loadSoundsFromProject(135074076);
     }
 
-    /**
-     * Load a project
-     * @return {void}
-     */
-    function loadProject(id) {
-        var url = 'https://projects.scratch.mit.edu/internalapi/project/' +
-            id + '/get/';
-        var r = new XMLHttpRequest();
-        r.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (r.status === 200) {
-                    window.vm.loadProject(this.responseText);
-                    console.log(window.vm);
-                } else {
-                    window.vm.createEmptyProject();
-                }
-            }
-        };
-        r.open('GET', url);
-        r.send();
-    };
+    // /**
+    //  * Load a project
+    //  * @return {void}
+    //  */
+    // function loadProject(id) {
+    //     var url = 'https://projects.scratch.mit.edu/internalapi/project/' +
+    //         id + '/get/';
+    //     var r = new XMLHttpRequest();
+    //     r.onreadystatechange = function() {
+    //         if (this.readyState === 4) {
+    //             if (r.status === 200) {
+    //                 window.vm.loadProject(this.responseText);
+    //                 console.log(window.vm);
+    //             } else {
+    //                 window.vm.createEmptyProject();
+    //             }
+    //         }
+    //     };
+    //     r.open('GET', url);
+    //     r.send();
+    // };
 
-    /**
-     * Binds the extension interface to `window.ext`.
-     * @return {void}
-     */
-    function bindExtensionHandler () {
-        if (typeof webkit === 'undefined') return;
-        if (typeof webkit.messageHandlers === 'undefined') return;
-        if (typeof webkit.messageHandlers.ext === 'undefined') return;
-        window.ext = webkit.messageHandlers.ext;
-    }
+    // /**
+    //  * Binds the extension interface to `window.ext`.
+    //  * @return {void}
+    //  */
+    // function bindExtensionHandler () {
+    //     if (typeof webkit === 'undefined') return;
+    //     if (typeof webkit.messageHandlers === 'undefined') return;
+    //     if (typeof webkit.messageHandlers.ext === 'undefined') return;
+    //     window.ext = webkit.messageHandlers.ext;
+    // }
 
-    /**
-     * Extension "connect" handler.
-     * @return {void}
-     */
-    function onConnect () {
-        var di = document.querySelector('#navigation .device button');
-        di.classList.add('connected');
-        di.classList.remove('scanning');
-    }
+    // /**
+    //  * Extension "connect" handler.
+    //  * @return {void}
+    //  */
+    // function onConnect () {
+    //     var di = document.querySelector('#navigation .device button');
+    //     di.classList.add('connected');
+    //     di.classList.remove('scanning');
+    // }
 
-    /**
-     * Extension "disconnect" handler.
-     * @return {void}
-     */
-    function onDisconnect () {
-        var di = document.querySelector('#navigation .device button');
-        di.classList.remove('connected');
-        di.classList.remove('scanning');
-        vm.stopAll();
-    }
+    // /**
+    //  * Extension "disconnect" handler.
+    //  * @return {void}
+    //  */
+    // function onDisconnect () {
+    //     var di = document.querySelector('#navigation .device button');
+    //     di.classList.remove('connected');
+    //     di.classList.remove('scanning');
+    //     vm.stopAll();
+    // }
 
-    /**
-     * fetch the data from a project, but only load the sounds from the stage
-     * update the sounds menu with the list of loaded sound names
-     * @return {void}
-     */
-    function loadSoundsFromProject(id) {
-        var url = 'https://projects.scratch.mit.edu/internalapi/project/' +
-            id + '/get/';
-        var r = new XMLHttpRequest();
-        r.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (r.status === 200) {
-                    var respObj = JSON.parse(this.responseText);
-                    var sounds = respObj.sounds;
+    // /**
+    //  * fetch the data from a project, but only load the sounds from the stage
+    //  * update the sounds menu with the list of loaded sound names
+    //  * @return {void}
+    //  */
+    // function loadSoundsFromProject(id) {
+    //     var url = 'https://projects.scratch.mit.edu/internalapi/project/' +
+    //         id + '/get/';
+    //     var r = new XMLHttpRequest();
+    //     r.onreadystatechange = function() {
+    //         if (this.readyState === 4) {
+    //             if (r.status === 200) {
+    //                 var respObj = JSON.parse(this.responseText);
+    //                 var sounds = respObj.sounds;
 
-                    // populate objects containing metadata about sounds in the project
-                    var soundObjs = [];
-                    for (var i=0; i<sounds.length; i++) {
-                        var soundObj = {};
-                        soundObj.fileUrl = 'https://cdn.assets.scratch.mit.edu/internalapi/asset/'
-                            + sounds[i].md5 + '/get/';
-                        soundObj.name = sounds[i].soundName;
-                        soundObj.format = sounds[i].format;
-                        soundObjs.push(soundObj);
-                    }
-                    // load the sounds
-                    window.audio.loadSounds(soundObjs);
+    //                 // populate objects containing metadata about sounds in the project
+    //                 var soundObjs = [];
+    //                 for (var i=0; i<sounds.length; i++) {
+    //                     var soundObj = {};
+    //                     soundObj.fileUrl = 'https://cdn.assets.scratch.mit.edu/internalapi/asset/'
+    //                         + sounds[i].md5 + '/get/';
+    //                     soundObj.name = sounds[i].soundName;
+    //                     soundObj.format = sounds[i].format;
+    //                     soundObjs.push(soundObj);
+    //                 }
+    //                 // load the sounds
+    //                 window.audio.loadSounds(soundObjs);
 
-                    // create menu items for blockly in the form [name, index]
-                    // containing the names of the loaded sounds
-                    var menuItems = [];
-                    for (var i=0; i<soundObjs.length; i++) {
-                        var item = [soundObjs[i].name, i.toString()];
-                        menuItems.push(item);
-                    }
+    //                 // create menu items for blockly in the form [name, index]
+    //                 // containing the names of the loaded sounds
+    //                 var menuItems = [];
+    //                 for (var i=0; i<soundObjs.length; i++) {
+    //                     var item = [soundObjs[i].name, i.toString()];
+    //                     menuItems.push(item);
+    //                 }
 
-                    // set the sound block's menu to the new menu
-                    window.Blockly.Blocks.sound_sounds_menu.init = function() {
-                        this.jsonInit(
-                          {
-                            "message0": "%1",
-                            "args0": [
-                              {
-                                "type": "field_dropdown",
-                                "name": "SOUND_MENU",
-                                "options": menuItems
-                              }
-                            ],
-                            "inputsInline": true,
-                            "output": "String",
-                            "colour": Blockly.Colours.sounds.secondary,
-                            "colourSecondary": Blockly.Colours.sounds.secondary,
-                            "colourTertiary": Blockly.Colours.sounds.tertiary,
-                            "outputShape": Blockly.OUTPUT_SHAPE_ROUND
-                          });
-                    };
-                    var tree = window.Blockly.getMainWorkspace().options.languageTree;
-                    window.Blockly.getMainWorkspace().updateToolbox(tree);
-                }
-            }
-        };
-        r.open('GET', url);
-        r.send();
-    };
+    //                 // set the sound block's menu to the new menu
+    //                 window.Blockly.Blocks.sound_sounds_menu.init = function() {
+    //                     this.jsonInit(
+    //                       {
+    //                         "message0": "%1",
+    //                         "args0": [
+    //                           {
+    //                             "type": "field_dropdown",
+    //                             "name": "SOUND_MENU",
+    //                             "options": menuItems
+    //                           }
+    //                         ],
+    //                         "inputsInline": true,
+    //                         "output": "String",
+    //                         "colour": Blockly.Colours.sounds.secondary,
+    //                         "colourSecondary": Blockly.Colours.sounds.secondary,
+    //                         "colourTertiary": Blockly.Colours.sounds.tertiary,
+    //                         "outputShape": Blockly.OUTPUT_SHAPE_ROUND
+    //                       });
+    //                 };
+    //                 var tree = window.Blockly.getMainWorkspace().options.languageTree;
+    //                 window.Blockly.getMainWorkspace().updateToolbox(tree);
+    //             }
+    //         }
+    //     };
+    //     r.open('GET', url);
+    //     r.send();
+    // };
 
     /**
      * Bind event handlers.
      */
     window.onload = onLoad;
-    window.onExtensionConnect = onConnect;
-    window.onExtensionDisconnect = onDisconnect;
+    // window.onExtensionConnect = onConnect;
+    // window.onExtensionDisconnect = onDisconnect;
 
 })();

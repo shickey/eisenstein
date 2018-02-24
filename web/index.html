@@ -13,6 +13,7 @@
         <script src="./lib/blocks/blocks_vertical/control.js"></script>
         <script src="./lib/blocks/blocks_vertical/event.js"></script>
         <script src="./lib/blocks/blocks_vertical/sound.js"></script>
+        <script src="./lib/blocks/blocks_vertical/video.js"></script>
         <script src="./lib/blocks/blocks_vertical/operators.js"></script>
 
         <!-- CSS Styles -->
@@ -25,7 +26,7 @@
         <xml id="toolbox">
             <block type="event_whenflagclicked"></block>
 
-            <block type="sound_playuntildone">
+<!--             <block type="sound_playuntildone">
                 <value name="SOUND_MENU">
                     <shadow type="sound_sounds_menu" />
                 </value>
@@ -53,7 +54,13 @@
                 </value>
             </block>
 
-            <block type="sound_cleareffects"></block>
+            <block type="sound_cleareffects"></block> -->
+
+            <block type="video_playuntildone">
+                <value name="VIDEO_MENU">
+                    <shadow type="video_videos_menu" />
+                </value>
+            </block>
 
             <block type="control_repeat">
                 <value name="TIMES">
