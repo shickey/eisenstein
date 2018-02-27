@@ -9,9 +9,17 @@
 import UIKit
 import WebKit
 
+let videoUrl = URL(string: "https://v.cdn.vine.co/r/videos_h264dash/C556231E881379309443162021888_50bad39a8a2.31.0.B933D152-281D-4FD4-A997-7B813C5F91E1.mp4")!
+
 class EditorViewController: UIViewController, WKScriptMessageHandler {
 
+    @IBOutlet weak var webViewContainer: UIView!
+    @IBOutlet weak var playerView: UIView!
+    
     var webView: WKWebView!
+    var player = Player()
+    
+    var playingPromiseId : String? = nil;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +36,10 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
         webViewConfig.userContentController = webViewController
         
         // Init webview and load editor
-        webView = WKWebView(frame: self.view.frame, configuration: webViewConfig)
-        webView.scrollView.isScrollEnabled = false;
-        webView.scrollView.panGestureRecognizer.isEnabled = false;
-        webView.scrollView.bounces = false;
+        webView = WKWebView(frame: self.webViewContainer.frame, configuration: webViewConfig)
+        webView.scrollView.isScrollEnabled = false
+        webView.scrollView.panGestureRecognizer.isEnabled = false
+        webView.scrollView.bounces = false
         
         // Load editor and add as subview
         let topurl = Bundle.main.url(forResource: "web", withExtension: nil)!
@@ -43,7 +51,22 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
         //        extWedo = WedoExtension(webView)
         
         // Add subview
-        self.view.addSubview(webView)
+        self.webViewContainer!.addSubview(webView)
+        
+        // Video player init
+        self.player.playerDelegate = self
+        self.player.playbackDelegate = self
+        self.player.view.frame = self.playerView.bounds
+        self.player.autoplay = false
+        self.player.playbackResumesWhenBecameActive = false
+        self.player.playbackResumesWhenEnteringForeground = false
+        
+        self.addChildViewController(self.player)
+        self.playerView.addSubview(self.player.view)
+        self.player.didMove(toParentViewController: self)
+        
+        self.player.url = videoUrl
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,19 +96,65 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
             // Video
             if (ext == "video") {
                 if (method == "startPlayback") { 
-                    
-                    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (Timer) in
-                        self.resolvePromise(resolveId!)
-                    })
+                    self.playingPromiseId = resolveId!
+                    self.player.playFromBeginning()
                 }
-                else if (method == "stopPlayback") { print("stop") }
             }
         }
     }
     
     func resolvePromise(_ promiseId: String) {
-        print("stopping video: \(promiseId)")
         webView!.evaluateJavaScript("resolveVideoPromise(\"\(promiseId)\")", completionHandler: nil)
     }
+    
+    // IBActions
+    
+    @IBAction func recordButtonTapped(_ sender: Any) {
+        
+    }
+    
+    @IBAction func videoReviewButtonTapped(_ sender: Any) {
+        
+    }
 
+}
+
+
+// MARK: - PlayerDelegate
+
+extension EditorViewController : PlayerDelegate {
+    
+    func playerReady(_ player: Player) {
+    }
+    
+    func playerPlaybackStateDidChange(_ player: Player) {
+    }
+    
+    func playerBufferingStateDidChange(_ player: Player) {
+    }
+    
+    func playerBufferTimeDidChange(_ bufferTime: Double) {
+    }
+    
+}
+
+// MARK: - PlayerPlaybackDelegate
+
+extension EditorViewController : PlayerPlaybackDelegate {
+    
+    func playerCurrentTimeDidChange(_ player: Player) {
+    }
+    
+    func playerPlaybackWillStartFromBeginning(_ player: Player) {
+    }
+    
+    func playerPlaybackDidEnd(_ player: Player) {
+        if let resolve = self.playingPromiseId {
+            self.resolvePromise(resolve)
+        }
+    }
+    
+    func playerPlaybackWillLoop(_ player: Player) {
+    }
+    
 }

@@ -103,16 +103,17 @@ button:focus {
 #navigation .primary {
     display: block;
     position: absolute;
-    left: calc(100% - 110px);
+    left: calc(100% - 70px);
+    top: calc(100% - 125px);
 }
 
 #navigation .primary button {
     display: block;
     position: relative;
-    width: 72px;
-    height: 72px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     background-color: #BECDE5;
     border: 1px solid #334B68;
     pointer-events: auto;

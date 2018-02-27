@@ -23,7 +23,7 @@
         // Get XML toolbox definition
         var toolbox = document.getElementById('toolbox');
         window.toolbox = toolbox;
-        Blockly.VerticalFlyout.prototype.DEFAULT_WIDTH = 302;
+        Blockly.VerticalFlyout.prototype.DEFAULT_WIDTH = 210;
 
         // Instantiate scratch-blocks and attach it to the DOM.
         var workspace = window.Blockly.inject('blocks', {
@@ -36,7 +36,7 @@
             zoom: {
                 controls: false,
                 wheel: false,
-                startScale: 1.0
+                startScale: 0.7
             },
             colours: {
                 workspace: '#334771',
