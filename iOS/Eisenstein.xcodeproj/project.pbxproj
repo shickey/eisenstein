@@ -18,6 +18,16 @@
 		A3EC1DB82040DB9000ED3E88 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EC1DB72040DB9000ED3E88 /* EditorViewController.swift */; };
 		A3FA77A12045856900B3C9EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3FA77A02045856900B3C9EA /* AVFoundation.framework */; };
 		A3FA77A32045872B00B3C9EA /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77A22045872B00B3C9EA /* CaptureViewController.swift */; };
+		A3FA77AF2045886300B3C9EA /* NextLevelSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77A52045886200B3C9EA /* NextLevelSession.swift */; };
+		A3FA77B02045886300B3C9EA /* NextLevel+Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77A62045886200B3C9EA /* NextLevel+Foundation.swift */; };
+		A3FA77B12045886300B3C9EA /* NextLevel+CoreMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77A72045886200B3C9EA /* NextLevel+CoreMedia.swift */; };
+		A3FA77B22045886300B3C9EA /* NextLevelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77A82045886200B3C9EA /* NextLevelConfiguration.swift */; };
+		A3FA77B32045886300B3C9EA /* NextLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77A92045886200B3C9EA /* NextLevel.swift */; };
+		A3FA77B42045886300B3C9EA /* NextLevel+AVFoundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77AA2045886200B3C9EA /* NextLevel+AVFoundation.swift */; };
+		A3FA77B52045886300B3C9EA /* NextLevel+CoreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77AB2045886200B3C9EA /* NextLevel+CoreImage.swift */; };
+		A3FA77B62045886300B3C9EA /* NextLevel+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77AC2045886200B3C9EA /* NextLevel+UIImage.swift */; };
+		A3FA77B72045886300B3C9EA /* NextLevel+Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77AD2045886200B3C9EA /* NextLevel+Metadata.swift */; };
+		A3FA77B82045886300B3C9EA /* NextLevelClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77AE2045886200B3C9EA /* NextLevelClip.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +65,16 @@
 		A3EC1DB72040DB9000ED3E88 /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditorViewController.swift; path = ViewControllers/EditorViewController.swift; sourceTree = "<group>"; };
 		A3FA77A02045856900B3C9EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A3FA77A22045872B00B3C9EA /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
+		A3FA77A52045886200B3C9EA /* NextLevelSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NextLevelSession.swift; path = Eisenstein/lib/NextLevel/NextLevelSession.swift; sourceTree = SOURCE_ROOT; };
+		A3FA77A62045886200B3C9EA /* NextLevel+Foundation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NextLevel+Foundation.swift"; path = "Eisenstein/lib/NextLevel/NextLevel+Foundation.swift"; sourceTree = SOURCE_ROOT; };
+		A3FA77A72045886200B3C9EA /* NextLevel+CoreMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NextLevel+CoreMedia.swift"; path = "Eisenstein/lib/NextLevel/NextLevel+CoreMedia.swift"; sourceTree = SOURCE_ROOT; };
+		A3FA77A82045886200B3C9EA /* NextLevelConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NextLevelConfiguration.swift; path = Eisenstein/lib/NextLevel/NextLevelConfiguration.swift; sourceTree = SOURCE_ROOT; };
+		A3FA77A92045886200B3C9EA /* NextLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NextLevel.swift; path = Eisenstein/lib/NextLevel/NextLevel.swift; sourceTree = SOURCE_ROOT; };
+		A3FA77AA2045886200B3C9EA /* NextLevel+AVFoundation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NextLevel+AVFoundation.swift"; path = "Eisenstein/lib/NextLevel/NextLevel+AVFoundation.swift"; sourceTree = SOURCE_ROOT; };
+		A3FA77AB2045886200B3C9EA /* NextLevel+CoreImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NextLevel+CoreImage.swift"; path = "Eisenstein/lib/NextLevel/NextLevel+CoreImage.swift"; sourceTree = SOURCE_ROOT; };
+		A3FA77AC2045886200B3C9EA /* NextLevel+UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NextLevel+UIImage.swift"; path = "Eisenstein/lib/NextLevel/NextLevel+UIImage.swift"; sourceTree = SOURCE_ROOT; };
+		A3FA77AD2045886200B3C9EA /* NextLevel+Metadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NextLevel+Metadata.swift"; path = "Eisenstein/lib/NextLevel/NextLevel+Metadata.swift"; sourceTree = SOURCE_ROOT; };
+		A3FA77AE2045886200B3C9EA /* NextLevelClip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NextLevelClip.swift; path = Eisenstein/lib/NextLevel/NextLevelClip.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +106,7 @@
 		A318319D204490D600EDBFB1 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				A3FA77A42045885400B3C9EA /* NextLevel */,
 				A318319E204490DE00EDBFB1 /* Player */,
 			);
 			name = lib;
@@ -125,7 +146,6 @@
 		A3EC1D7E2040D01400ED3E88 /* Eisenstein */ = {
 			isa = PBXGroup;
 			children = (
-				A318319D204490D600EDBFB1 /* lib */,
 				A3EC1D7F2040D01400ED3E88 /* AppDelegate.swift */,
 				A3EC1D832040D01400ED3E88 /* Main.storyboard */,
 				A3EC1D862040D01400ED3E88 /* Assets.xcassets */,
@@ -133,6 +153,7 @@
 				A3EC1D8B2040D01400ED3E88 /* Info.plist */,
 				A3EC1DB72040DB9000ED3E88 /* EditorViewController.swift */,
 				A3FA77A22045872B00B3C9EA /* CaptureViewController.swift */,
+				A318319D204490D600EDBFB1 /* lib */,
 			);
 			path = Eisenstein;
 			sourceTree = "<group>";
@@ -161,6 +182,23 @@
 				A3FA77A02045856900B3C9EA /* AVFoundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A3FA77A42045885400B3C9EA /* NextLevel */ = {
+			isa = PBXGroup;
+			children = (
+				A3FA77A92045886200B3C9EA /* NextLevel.swift */,
+				A3FA77AA2045886200B3C9EA /* NextLevel+AVFoundation.swift */,
+				A3FA77AB2045886200B3C9EA /* NextLevel+CoreImage.swift */,
+				A3FA77A72045886200B3C9EA /* NextLevel+CoreMedia.swift */,
+				A3FA77A62045886200B3C9EA /* NextLevel+Foundation.swift */,
+				A3FA77AD2045886200B3C9EA /* NextLevel+Metadata.swift */,
+				A3FA77AC2045886200B3C9EA /* NextLevel+UIImage.swift */,
+				A3FA77AE2045886200B3C9EA /* NextLevelClip.swift */,
+				A3FA77A82045886200B3C9EA /* NextLevelConfiguration.swift */,
+				A3FA77A52045886200B3C9EA /* NextLevelSession.swift */,
+			);
+			path = NextLevel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,10 +358,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3FA77B72045886300B3C9EA /* NextLevel+Metadata.swift in Sources */,
+				A3FA77B02045886300B3C9EA /* NextLevel+Foundation.swift in Sources */,
+				A3FA77B32045886300B3C9EA /* NextLevel.swift in Sources */,
+				A3FA77AF2045886300B3C9EA /* NextLevelSession.swift in Sources */,
+				A3FA77B12045886300B3C9EA /* NextLevel+CoreMedia.swift in Sources */,
 				A3EC1DB82040DB9000ED3E88 /* EditorViewController.swift in Sources */,
+				A3FA77B62045886300B3C9EA /* NextLevel+UIImage.swift in Sources */,
+				A3FA77B42045886300B3C9EA /* NextLevel+AVFoundation.swift in Sources */,
 				A3FA77A32045872B00B3C9EA /* CaptureViewController.swift in Sources */,
+				A3FA77B82045886300B3C9EA /* NextLevelClip.swift in Sources */,
 				A31831A0204490EB00EDBFB1 /* Player.swift in Sources */,
+				A3FA77B22045886300B3C9EA /* NextLevelConfiguration.swift in Sources */,
 				A3EC1D802040D01400ED3E88 /* AppDelegate.swift in Sources */,
+				A3FA77B52045886300B3C9EA /* NextLevel+CoreImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

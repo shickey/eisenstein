@@ -71,13 +71,23 @@
                     <view key="view" contentMode="scaleToFill" id="0lR-OQ-Prg">
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v8q-Fp-EoH">
+                                <rect key="frame" x="184" y="60" width="200" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Ag3-4Y-Vp3"/>
                     </view>
+                    <connections>
+                        <outlet property="videoPreviewView" destination="v8q-Fp-EoH" id="LKD-ex-hlM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dmX-mh-l2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="34" y="971"/>
+            <point key="canvasLocation" x="33.802816901408448" y="969.375"/>
         </scene>
     </scenes>
 </document>
