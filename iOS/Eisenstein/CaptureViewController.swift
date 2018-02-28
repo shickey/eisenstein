@@ -21,7 +21,7 @@ class CaptureViewController: UIViewController {
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         get {
-            return .portrait
+            return .landscape
         }
     }
     
@@ -80,7 +80,10 @@ class CaptureViewController: UIViewController {
         self.presentingViewController!.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func browserButtonTapped(_ sender: Any) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let clipsVC = segue.destination as? ClipsViewController {
+            clipsVC.project = project
+        }
     }
     
 }

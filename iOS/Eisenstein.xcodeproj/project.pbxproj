@@ -29,6 +29,8 @@
 		A3FA77B72045886300B3C9EA /* NextLevel+Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77AD2045886200B3C9EA /* NextLevel+Metadata.swift */; };
 		A3FA77B82045886300B3C9EA /* NextLevelClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77AE2045886200B3C9EA /* NextLevelClip.swift */; };
 		A3FA77BA2046300000B3C9EA /* DataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77B92046300000B3C9EA /* DataStructures.swift */; };
+		A3FA77BE2046526900B3C9EA /* ClipsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77BD2046526900B3C9EA /* ClipsViewController.swift */; };
+		A3FA77EA2046D71D00B3C9EA /* Eisenstein.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77E82046D71D00B3C9EA /* Eisenstein.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,8 @@
 		A3FA77AD2045886200B3C9EA /* NextLevel+Metadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NextLevel+Metadata.swift"; path = "Eisenstein/lib/NextLevel/NextLevel+Metadata.swift"; sourceTree = SOURCE_ROOT; };
 		A3FA77AE2045886200B3C9EA /* NextLevelClip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NextLevelClip.swift; path = Eisenstein/lib/NextLevel/NextLevelClip.swift; sourceTree = SOURCE_ROOT; };
 		A3FA77B92046300000B3C9EA /* DataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructures.swift; sourceTree = "<group>"; };
+		A3FA77BD2046526900B3C9EA /* ClipsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipsViewController.swift; sourceTree = "<group>"; };
+		A3FA77E92046D71D00B3C9EA /* Eisenstein.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Eisenstein.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +160,8 @@
 				A3EC1D8B2040D01400ED3E88 /* Info.plist */,
 				A3EC1DB72040DB9000ED3E88 /* EditorViewController.swift */,
 				A3FA77A22045872B00B3C9EA /* CaptureViewController.swift */,
+				A3FA77BD2046526900B3C9EA /* ClipsViewController.swift */,
+				A3FA77E82046D71D00B3C9EA /* Eisenstein.xcdatamodeld */,
 				A318319D204490D600EDBFB1 /* lib */,
 			);
 			path = Eisenstein;
@@ -362,9 +368,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3FA77B72045886300B3C9EA /* NextLevel+Metadata.swift in Sources */,
+				A3FA77EA2046D71D00B3C9EA /* Eisenstein.xcdatamodeld in Sources */,
 				A3FA77B02045886300B3C9EA /* NextLevel+Foundation.swift in Sources */,
 				A3FA77B32045886300B3C9EA /* NextLevel.swift in Sources */,
 				A3FA77AF2045886300B3C9EA /* NextLevelSession.swift in Sources */,
+				A3FA77BE2046526900B3C9EA /* ClipsViewController.swift in Sources */,
 				A3FA77B12045886300B3C9EA /* NextLevel+CoreMedia.swift in Sources */,
 				A3EC1DB82040DB9000ED3E88 /* EditorViewController.swift in Sources */,
 				A3FA77BA2046300000B3C9EA /* DataStructures.swift in Sources */,
@@ -707,6 +715,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A3FA77E82046D71D00B3C9EA /* Eisenstein.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A3FA77E92046D71D00B3C9EA /* Eisenstein.xcdatamodel */,
+			);
+			currentVersion = A3FA77E92046D71D00B3C9EA /* Eisenstein.xcdatamodel */;
+			path = Eisenstein.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A3EC1D742040D01400ED3E88 /* Project object */;
 }

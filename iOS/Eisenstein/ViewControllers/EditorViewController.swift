@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 import WebKit
 
 let videoUrl = URL(string: "https://v.cdn.vine.co/r/videos_h264dash/C556231E881379309443162021888_50bad39a8a2.31.0.B933D152-281D-4FD4-A997-7B813C5F91E1.mp4")!
@@ -16,6 +17,7 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
     @IBOutlet weak var webViewContainer: UIView!
     @IBOutlet weak var playerView: UIView!
     
+    var moc : NSManagedObjectContext?
     var project : Project?
     
     var webView: WKWebView!
@@ -23,12 +25,14 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
     
     var playingPromiseId : String? = nil;
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            return .landscape
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // @TEMP
-        // Generate an empty project
-        project = Project()
         
         // Set view controller background color
         self.view.backgroundColor = UIColor(red: (0x33 / 255.0), green: (0x47 / 255.0), blue: (0x71 / 255.0), alpha: 1.0)
@@ -73,6 +77,14 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
         
         self.player.url = videoUrl
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("Managed Object Context \(moc!)")
+        print("Project \(project!)")
+        print("Project ID \(project!.id!)")
+        print("Project Media Directory \(project!.mediaDirectory)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -126,6 +138,9 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let captureVC = segue.destination as? CaptureViewController {
             captureVC.project = project
+        }
+        else if let clipsVC = segue.destination as? ClipsViewController {
+            clipsVC.project = project
         }
     }
 
