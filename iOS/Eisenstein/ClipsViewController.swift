@@ -49,14 +49,26 @@ class ClipsViewController : UIViewController, UICollectionViewDelegate, UICollec
 
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//         #warning Incomplete implementation, return the number of items
-        return 3
+        if let p = project {
+            print("Found a project with \(p.clips!.count) clips")
+            return p.clips!.count
+        }
+        else {
+            print("No project found!")
+        }
+        return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let clip = project!.clips![indexPath.item] as! Clip
     
-        // Configure the cell
+        let label = cell.viewWithTag(1) as! UILabel
+        label.text = clip.title
+        
+        let thumb = UIImage(data: clip.thumbnail!)
+        let thumbView = cell.viewWithTag(2) as! UIImageView
+        thumbView.image = thumb
     
         return cell
     }

@@ -9,29 +9,19 @@
 import Foundation
 import CoreData
 
-//struct Project {
-//    let id : UUID
-//    let mediaDirectory : URL
-//    
-//    init() {
-//        let newId = UUID()
-//        id = newId
-//        mediaDirectory = {
-//            let docsDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
-//            let mediaUrl = docsDirectoryUrl.appendingPathComponent(newId.uuidString, isDirectory: true)
-//            try! FileManager.default.createDirectory(at: mediaUrl, withIntermediateDirectories: true, attributes: nil)
-//            return mediaUrl
-//        }()
-//    }
-//    
-//}
-
+// NSManagedObject Extensions
 extension Project {
     
     static func create(context moc: NSManagedObjectContext) -> Project {
-        var project = self.init(context: moc)
+        let project = self.init(context: moc)
         project.id = UUID()
         return project
+    }
+    
+    func createClip(context moc: NSManagedObjectContext) -> Clip {
+        let clip = Clip(context: moc)
+        self.addToClips(clip)
+        return clip
     }
     
     var mediaDirectory : URL {
@@ -42,5 +32,9 @@ extension Project {
             return mediaUrl
         }
     }
+    
+}
+
+extension Clip {
     
 }

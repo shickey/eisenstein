@@ -35,6 +35,7 @@ class CaptureViewController: UIViewController {
         nextLevel.delegate = self
         nextLevel.deviceDelegate = self
         
+        // @TODO: Update video config (square aspect, etc.)
         nextLevel.videoConfiguration.bitRate = 2000000
         nextLevel.videoConfiguration.scalingMode = AVVideoScalingModeResizeAspectFill
         
@@ -98,10 +99,37 @@ extension CaptureViewController {
     }
     
     func endCapture() {
-        NextLevel.shared.pause()
-        if let session = NextLevel.shared.session {
-            if let videoUrl = NextLevel.shared.session?.lastClipUrl {
-                print(videoUrl)
+        NextLevel.shared.pause { 
+            // Completion Handler
+            if let lastClip = NextLevel.shared.session?.clips.last {
+                let moc = self.project!.managedObjectContext!
+                let clip = self.project!.createClip(context: moc)
+                clip.url = lastClip.url!
+                clip.title = "Untitled"
+                
+                let thumb = lastClip.thumbnailImage!
+                let png = UIImagePNGRepresentation(thumb)!
+                
+                clip.thumbnail = png
+                
+                // @TODO: Handle save errors appropriately
+                try! moc.save()
+                
+                print("created clip")
+            }
+//            if let videoUrl = NextLevel.shared.session?.lastClipUrl {
+//                let moc = self.project!.managedObjectContext!
+//                let clip = self.project!.createClip(context: moc)
+//                clip.url = videoUrl
+//                clip.title = "Untitled"
+//                
+//                // @TODO: Handle save errors appropriately
+//                try! moc.save()
+//                
+//                print("created clip")
+//            }
+            else {
+                print("could not create clip")
             }
         }
     }
