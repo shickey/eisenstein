@@ -15,6 +15,7 @@ class ClipCell : UICollectionViewCell {}
 class ClipsViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var project : Project?
+    let player = Player()
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -29,6 +30,10 @@ class ClipsViewController : UIViewController, UICollectionViewDelegate, UICollec
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        self.player.autoplay = false
+        self.player.playbackResumesWhenBecameActive = false
+        self.player.playbackResumesWhenEnteringForeground = false
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -82,12 +87,32 @@ class ClipsViewController : UIViewController, UICollectionViewDelegate, UICollec
     }
     */
 
-    /*
     // Uncomment this method to specify if the specified item should be selected
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
-    */
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Start playing video preview in cell
+        let clip = project!.clips![indexPath.item] as! Clip
+        
+        let cell = collectionView.cellForItem(at: indexPath)!
+        let previewView = cell.viewWithTag(3)!
+        previewView.alpha = 1
+        
+        self.player.view.frame = previewView.bounds
+        self.addChildViewController(self.player)
+        previewView.addSubview(self.player.view)
+        self.player.didMove(toParentViewController: self)
+        
+        self.player.url = clip.url!
+        
+        self.player.playFromBeginning()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        // Stop playing video preview in cell
+    }
 
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item

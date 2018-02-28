@@ -56,10 +56,6 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
         let starturl = Bundle.main.url(forResource: "web/index", withExtension: "html")!
         webView!.loadFileURL(starturl, allowingReadAccessTo: topurl)
         
-        // Bind extensions
-        //        extSound = SoundExtension(webView)
-        //        extWedo = WedoExtension(webView)
-        
         // Add subview
         self.webViewContainer!.addSubview(webView)
         

@@ -37,7 +37,7 @@ class CaptureViewController: UIViewController {
         
         // @TODO: Update video config (square aspect, etc.)
         nextLevel.videoConfiguration.bitRate = 2000000
-        nextLevel.videoConfiguration.scalingMode = AVVideoScalingModeResizeAspectFill
+        nextLevel.videoConfiguration.aspectRatio = .square
         
         // Record Button
         self.pressToRecordGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGestureRecognizer(_:)))
@@ -117,17 +117,6 @@ extension CaptureViewController {
                 
                 print("created clip")
             }
-//            if let videoUrl = NextLevel.shared.session?.lastClipUrl {
-//                let moc = self.project!.managedObjectContext!
-//                let clip = self.project!.createClip(context: moc)
-//                clip.url = videoUrl
-//                clip.title = "Untitled"
-//                
-//                // @TODO: Handle save errors appropriately
-//                try! moc.save()
-//                
-//                print("created clip")
-//            }
             else {
                 print("could not create clip")
             }
