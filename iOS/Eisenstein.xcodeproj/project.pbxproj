@@ -28,6 +28,7 @@
 		A3FA77B62045886300B3C9EA /* NextLevel+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77AC2045886200B3C9EA /* NextLevel+UIImage.swift */; };
 		A3FA77B72045886300B3C9EA /* NextLevel+Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77AD2045886200B3C9EA /* NextLevel+Metadata.swift */; };
 		A3FA77B82045886300B3C9EA /* NextLevelClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77AE2045886200B3C9EA /* NextLevelClip.swift */; };
+		A3FA77BA2046300000B3C9EA /* DataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77B92046300000B3C9EA /* DataStructures.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		A3FA77AC2045886200B3C9EA /* NextLevel+UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NextLevel+UIImage.swift"; path = "Eisenstein/lib/NextLevel/NextLevel+UIImage.swift"; sourceTree = SOURCE_ROOT; };
 		A3FA77AD2045886200B3C9EA /* NextLevel+Metadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NextLevel+Metadata.swift"; path = "Eisenstein/lib/NextLevel/NextLevel+Metadata.swift"; sourceTree = SOURCE_ROOT; };
 		A3FA77AE2045886200B3C9EA /* NextLevelClip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NextLevelClip.swift; path = Eisenstein/lib/NextLevel/NextLevelClip.swift; sourceTree = SOURCE_ROOT; };
+		A3FA77B92046300000B3C9EA /* DataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructures.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				A3EC1D7F2040D01400ED3E88 /* AppDelegate.swift */,
+				A3FA77B92046300000B3C9EA /* DataStructures.swift */,
 				A3EC1D832040D01400ED3E88 /* Main.storyboard */,
 				A3EC1D862040D01400ED3E88 /* Assets.xcassets */,
 				A3EC1D882040D01400ED3E88 /* LaunchScreen.storyboard */,
@@ -364,6 +367,7 @@
 				A3FA77AF2045886300B3C9EA /* NextLevelSession.swift in Sources */,
 				A3FA77B12045886300B3C9EA /* NextLevel+CoreMedia.swift in Sources */,
 				A3EC1DB82040DB9000ED3E88 /* EditorViewController.swift in Sources */,
+				A3FA77BA2046300000B3C9EA /* DataStructures.swift in Sources */,
 				A3FA77B62045886300B3C9EA /* NextLevel+UIImage.swift in Sources */,
 				A3FA77B42045886300B3C9EA /* NextLevel+AVFoundation.swift in Sources */,
 				A3FA77A32045872B00B3C9EA /* CaptureViewController.swift in Sources */,

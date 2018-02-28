@@ -16,6 +16,8 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
     @IBOutlet weak var webViewContainer: UIView!
     @IBOutlet weak var playerView: UIView!
     
+    var project : Project?
+    
     var webView: WKWebView!
     var player = Player()
     
@@ -23,6 +25,10 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // @TEMP
+        // Generate an empty project
+        project = Project()
         
         // Set view controller background color
         self.view.backgroundColor = UIColor(red: (0x33 / 255.0), green: (0x47 / 255.0), blue: (0x71 / 255.0), alpha: 1.0)
@@ -115,6 +121,12 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
     
     @IBAction func videoReviewButtonTapped(_ sender: Any) {
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let captureVC = segue.destination as? CaptureViewController {
+            captureVC.project = project
+        }
     }
 
 }
