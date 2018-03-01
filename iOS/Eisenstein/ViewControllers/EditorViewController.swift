@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import WebKit
 
-let videoUrl = URL(string: "https://v.cdn.vine.co/r/videos_h264dash/C556231E881379309443162021888_50bad39a8a2.31.0.B933D152-281D-4FD4-A997-7B813C5F91E1.mp4")!
+//let videoUrl = URL(string: "https://v.cdn.vine.co/r/videos_h264dash/C556231E881379309443162021888_50bad39a8a2.31.0.B933D152-281D-4FD4-A997-7B813C5F91E1.mp4")!
 
 class EditorViewController: UIViewController, WKScriptMessageHandler {
 
@@ -71,8 +71,27 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
         self.playerView.addSubview(self.player.view)
         self.player.didMove(toParentViewController: self)
         
-        self.player.url = videoUrl
+//        self.player.url = videoUrl
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let clips = project!.clips!
+        var clipsJsonString = "["
+        for (idx, clip) in clips.enumerated() {
+            let c = clip as! Clip
+            clipsJsonString += "{title:\"\(c.title!)\"}"
+            if idx != clips.count - 1 {
+                clipsJsonString += ","
+            }
+        }
+        clipsJsonString += "]"
+        
+        print("Clips: \(clipsJsonString)")
+        
+        webView!.evaluateJavaScript("updateVideoMenus(\(clipsJsonString))", completionHandler: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -98,9 +117,10 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
         
         // Map message payloads to extensions
         if let body = message.body as? NSDictionary {
+            print(body)
             let ext = body.object(forKey: "extension") as? String
             let method = body.object(forKey: "method") as? String
-            let args = body.object(forKey: "args") as! [AnyObject]
+            let videoIndex = body.object(forKey: "videoIndex") as! NSNumber
             let resolveId = body.object(forKey: "resolveId") as? String
             
             // @todo Guard
@@ -109,9 +129,23 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
             
             // Video
             if (ext == "video") {
-                if (method == "startPlayback") { 
+                let clip = project!.clips![videoIndex.intValue] as! Clip
+                if (method == "playUntilDone") { 
                     self.playingPromiseId = resolveId!
+                    self.player.url = clip.url! 
                     self.player.playFromBeginning()
+                }
+                else if (method == "startVideo") {
+                    if let storedId = self.playingPromiseId {
+                        resolvePromise(storedId)
+                    }
+                    
+                    self.player.url = clip.url!
+                    self.player.playFromBeginning()
+                    
+                    // resolve the promise immediately so the VM
+                    // can keep executing blocks
+                    resolvePromise(resolveId!)
                 }
             }
         }
@@ -119,6 +153,7 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
     
     func resolvePromise(_ promiseId: String) {
         webView!.evaluateJavaScript("resolveVideoPromise(\"\(promiseId)\")", completionHandler: nil)
+        self.playingPromiseId = nil
     }
     
     // IBActions

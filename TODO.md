@@ -1,6 +1,7 @@
 # Todo
 
-- Video orientation bug
+- ~~Renaming Clips~~
+
 - Webview scrollable workspace
 - Passing video file names to webview
 - Recording UI - provide feedback upon capture and save
@@ -8,7 +9,7 @@
 - Project creation and selection
 - Block persistence in core data
 
-- Renaming Clips
+- Video orientation bug
 
 - Additional video blocks
     - Start video (i.e., without waiting until done)
