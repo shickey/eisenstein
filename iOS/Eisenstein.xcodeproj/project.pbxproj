@@ -31,6 +31,7 @@
 		A3FA77BA2046300000B3C9EA /* DataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77B92046300000B3C9EA /* DataStructures.swift */; };
 		A3FA77BE2046526900B3C9EA /* ClipsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77BD2046526900B3C9EA /* ClipsViewController.swift */; };
 		A3FA77EA2046D71D00B3C9EA /* Eisenstein.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77E82046D71D00B3C9EA /* Eisenstein.xcdatamodeld */; };
+		A3FA77ED2047790900B3C9EA /* EditClipPropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FA77EC2047790900B3C9EA /* EditClipPropertiesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,8 @@
 		A3FA77B92046300000B3C9EA /* DataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructures.swift; sourceTree = "<group>"; };
 		A3FA77BD2046526900B3C9EA /* ClipsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipsViewController.swift; sourceTree = "<group>"; };
 		A3FA77E92046D71D00B3C9EA /* Eisenstein.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Eisenstein.xcdatamodel; sourceTree = "<group>"; };
+		A3FA77EB204773B900B3C9EA /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = TODO.md; path = ../TODO.md; sourceTree = "<group>"; };
+		A3FA77EC2047790900B3C9EA /* EditClipPropertiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditClipPropertiesViewController.swift; path = ViewControllers/EditClipPropertiesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +133,7 @@
 		A3EC1D732040D01400ED3E88 = {
 			isa = PBXGroup;
 			children = (
+				A3FA77EB204773B900B3C9EA /* TODO.md */,
 				A3EC1DAF2040DA6600ED3E88 /* web */,
 				A3EC1D7E2040D01400ED3E88 /* Eisenstein */,
 				A3EC1D932040D01400ED3E88 /* EisensteinTests */,
@@ -155,6 +159,7 @@
 				A3EC1D7F2040D01400ED3E88 /* AppDelegate.swift */,
 				A3FA77B92046300000B3C9EA /* DataStructures.swift */,
 				A3EC1D832040D01400ED3E88 /* Main.storyboard */,
+				A3FA77EC2047790900B3C9EA /* EditClipPropertiesViewController.swift */,
 				A3EC1D862040D01400ED3E88 /* Assets.xcassets */,
 				A3EC1D882040D01400ED3E88 /* LaunchScreen.storyboard */,
 				A3EC1D8B2040D01400ED3E88 /* Info.plist */,
@@ -368,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3FA77B72045886300B3C9EA /* NextLevel+Metadata.swift in Sources */,
+				A3FA77ED2047790900B3C9EA /* EditClipPropertiesViewController.swift in Sources */,
 				A3FA77EA2046D71D00B3C9EA /* Eisenstein.xcdatamodeld in Sources */,
 				A3FA77B02045886300B3C9EA /* NextLevel+Foundation.swift in Sources */,
 				A3FA77B32045886300B3C9EA /* NextLevel.swift in Sources */,

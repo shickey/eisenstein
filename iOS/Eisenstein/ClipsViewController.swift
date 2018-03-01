@@ -24,6 +24,12 @@ class ClipsViewController : UIViewController, UICollectionViewDelegate, UICollec
             return .landscape
         }
     }
+    
+    deinit {
+        self.player.willMove(toParentViewController: self)
+        self.player.view.removeFromSuperview()
+        self.player.removeFromParentViewController()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +37,17 @@ class ClipsViewController : UIViewController, UICollectionViewDelegate, UICollec
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        self.addChildViewController(self.player)
+        self.player.didMove(toParentViewController: self)
+        
         self.player.autoplay = false
         self.player.playbackResumesWhenBecameActive = false
         self.player.playbackResumesWhenEnteringForeground = false
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,8 +77,8 @@ class ClipsViewController : UIViewController, UICollectionViewDelegate, UICollec
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         let clip = project!.clips![indexPath.item] as! Clip
     
-        let label = cell.viewWithTag(1) as! UILabel
-        label.text = clip.title
+        let titleButton = cell.viewWithTag(1) as! UIButton
+        titleButton.setTitle(clip.title, for: .normal)
         
         let thumb = UIImage(data: clip.thumbnail!)
         let thumbView = cell.viewWithTag(2) as! UIImageView
@@ -101,9 +110,7 @@ class ClipsViewController : UIViewController, UICollectionViewDelegate, UICollec
         previewView.alpha = 1
         
         self.player.view.frame = previewView.bounds
-        self.addChildViewController(self.player)
         previewView.addSubview(self.player.view)
-        self.player.didMove(toParentViewController: self)
         
         self.player.url = clip.url!
         
@@ -112,8 +119,33 @@ class ClipsViewController : UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         // Stop playing video preview in cell
+        self.player.stop()
+        
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            let previewView = cell.viewWithTag(3)!
+            previewView.alpha = 0
+        }
+        
+        self.player.view.removeFromSuperview()
+        
     }
 
+    // @TODO: This is an ugly hack. Find a better way to send the tap events
+    //        from the cell to the view controller
+    @IBAction func clipCellTitleButtonTapped(_ sender: Any) {
+        // Disabled temporarily
+        let cell = (sender as! UIButton).superview!.superview as! UICollectionViewCell
+        let indexPath = collectionView.indexPath(for: cell)!
+        let clip = project!.clips![indexPath.item] as! Clip
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let editPropsVC = storyboard.instantiateViewController(withIdentifier: "editClipProperties") as! EditClipPropertiesViewController
+        
+        editPropsVC.clip = clip
+        
+        self.present(editPropsVC, animated: true, completion: nil)
+    }
+    
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
     func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
