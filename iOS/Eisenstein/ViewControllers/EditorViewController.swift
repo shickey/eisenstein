@@ -15,6 +15,7 @@ import WebKit
 class EditorViewController: UIViewController, WKScriptMessageHandler {
 
     @IBOutlet weak var webViewContainer: UIView!
+    @IBOutlet weak var playerContainerView: UIView!
     @IBOutlet weak var playerView: UIView!
     
     var moc : NSManagedObjectContext?
@@ -37,9 +38,14 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
         // Set view controller background color
         self.view.backgroundColor = UIColor(red: (0x33 / 255.0), green: (0x47 / 255.0), blue: (0x71 / 255.0), alpha: 1.0)
         
+        // Resize Preview Window
+        let screenBounds = UIScreen.main.bounds
+        self.playerContainerView.frame = CGRect(x: screenBounds.width - (screenBounds.height / 2), y: 0, width: screenBounds.height / 2, height: screenBounds.height / 2)
+        
         // Create web view controller and bind to "ext" namespace (extensions)
         let webViewController = WKUserContentController()
         webViewController.add(self, name: "ext")
+        webViewController.add(self, name: "cons")
         
         // Create web view configuration
         let webViewConfig = WKWebViewConfiguration()
@@ -79,19 +85,22 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
         super.viewWillAppear(animated)
         
         let clips = project!.clips!
-        var clipsJsonString = "["
-        for (idx, clip) in clips.enumerated() {
-            let c = clip as! Clip
-            clipsJsonString += "{title:\"\(c.title!)\"}"
-            if idx != clips.count - 1 {
-                clipsJsonString += ","
+        if clips.count > 0 {
+            var clipsJsonString = "["
+            for (idx, clip) in clips.enumerated() {
+                let c = clip as! Clip
+                clipsJsonString += "{title:\"\(c.title!)\"}"
+                if idx != clips.count - 1 {
+                    clipsJsonString += ","
+                }
             }
+            clipsJsonString += "]"
+            
+            print("Clips: \(clipsJsonString)")
+            
+            webView!.evaluateJavaScript("updateVideoMenus(\(clipsJsonString))", completionHandler: nil)
         }
-        clipsJsonString += "]"
         
-        print("Clips: \(clipsJsonString)")
-        
-        webView!.evaluateJavaScript("updateVideoMenus(\(clipsJsonString))", completionHandler: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -100,6 +109,8 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
         print("Project \(project!)")
         print("Project ID \(project!.id!)")
         print("Project Media Directory \(project!.mediaDirectory)")
+        
+        webView!.evaluateJavaScript("console.log(\"Hello console!\")", completionHandler: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -113,15 +124,17 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         // Validate
-        if (message.name != "ext") { return }
+//        if (message.name != "ext" || message.name != "cons") { return }
+        
+        if message.name == "cons" {
+            print("Console message: ", message)
+        }
         
         // Map message payloads to extensions
         if let body = message.body as? NSDictionary {
             print(body)
             let ext = body.object(forKey: "extension") as? String
             let method = body.object(forKey: "method") as? String
-            let videoIndex = body.object(forKey: "videoIndex") as! NSNumber
-            let resolveId = body.object(forKey: "resolveId") as? String
             
             // @todo Guard
             // @todo The validation for each of these should be much more strict
@@ -129,15 +142,22 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
             
             // Video
             if (ext == "video") {
-                let clip = project!.clips![videoIndex.intValue] as! Clip
-                if (method == "playUntilDone") { 
-                    self.playingPromiseId = resolveId!
+                if (method == "playUntilDone") {
+                    let videoIndex = body.object(forKey: "videoIndex") as! NSNumber
+                    let clip = project!.clips![videoIndex.intValue] as! Clip
+                    let resolveId = body.object(forKey: "resolveId") as! String
+                    
+                    self.playingPromiseId = resolveId
                     self.player.url = clip.url! 
                     self.player.playFromBeginning()
                 }
                 else if (method == "startVideo") {
+                    let videoIndex = body.object(forKey: "videoIndex") as! NSNumber
+                    let clip = project!.clips![videoIndex.intValue] as! Clip
+                    let resolveId = body.object(forKey: "resolveId") as! String
+                    
                     if let storedId = self.playingPromiseId {
-                        resolvePromise(storedId)
+                        resolveVideoPromise(storedId)
                     }
                     
                     self.player.url = clip.url!
@@ -145,26 +165,94 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
                     
                     // resolve the promise immediately so the VM
                     // can keep executing blocks
-                    resolvePromise(resolveId!)
+                    resolveVideoPromise(resolveId)
+                }
+                else if (method == "rotateRightBy") {
+                    let degrees = body.object(forKey: "degrees") as! NSNumber
+                    let resolveId = body.object(forKey: "resolveId") as! String
+                    rotateVideo(by: degrees.doubleValue, resolveId: resolveId)
+                }
+                else if (method == "rotateLeftBy") {
+                    let degrees = body.object(forKey: "degrees") as! NSNumber
+                    let resolveId = body.object(forKey: "resolveId") as! String
+                    rotateVideo(by: -degrees.doubleValue, resolveId: resolveId)
+                }
+                else if (method == "setRotation") {
+                    let degrees = body.object(forKey: "degrees") as! NSNumber
+                    let resolveId = body.object(forKey: "resolveId") as! String
+                    rotateVideo(to: degrees.doubleValue, resolveId: resolveId)
+                }
+                else if (method == "changeSizeBy") {
+                    let percentage = body.object(forKey: "percentage") as! NSNumber
+                    let resolveId = body.object(forKey: "resolveId") as! String
+                    scaleVideo(by: percentage.doubleValue, resolveId: resolveId)
+                }
+                else if (method == "setSize") {
+                    let percentage = body.object(forKey: "percentage") as! NSNumber
+                    let resolveId = body.object(forKey: "resolveId") as! String
+                    scaleVideo(to: percentage.doubleValue, resolveId: resolveId)
+                }
+                else if (method == "stopAll") {
+                    self.player.stop()
                 }
             }
         }
     }
     
+    func degreesToRadians(_ degrees: Double) -> Double {
+        return degrees * (Double.pi / 180.0)
+    }
+    
+    func rotateVideo(by degrees: Double, resolveId: String) {
+        UIView.animate(withDuration: 0, animations: { 
+            self.playerView.transform = self.playerView.transform.rotated(by: CGFloat(self.degreesToRadians(degrees)))
+        }) { (finished) in
+            self.resolvePromise(resolveId)
+        }
+    }
+    
+    func rotateVideo(to degrees: Double, resolveId: String) {
+        UIView.animate(withDuration: 0, animations: { 
+            let transform = self.playerView.transform
+            let currentRotation = atan2(transform.b, transform.a)
+            self.playerView.transform = transform.rotated(by: -currentRotation).rotated(by: CGFloat(self.degreesToRadians(degrees)))
+        }) { (finished) in
+            self.resolvePromise(resolveId)
+        }
+    }
+    
+    func scaleVideo(by percentage: Double, resolveId: String) {
+        UIView.animate(withDuration: 0, animations: { 
+            let newScale = (percentage / 100.0) + 1.0
+            self.playerView.transform = self.playerView.transform.scaledBy(x: CGFloat(newScale), y: CGFloat(newScale))
+        }) { (finished) in
+            self.resolvePromise(resolveId)
+        }
+    }
+    
+    func scaleVideo(to percentage: Double, resolveId: String) {
+        UIView.animate(withDuration: 0, animations: { 
+            let transform = self.playerView.transform
+            let currentScale = sqrt(transform.a * transform.a + transform.c * transform.c)
+            let newScale = percentage / 100.0
+            self.playerView.transform = transform.scaledBy(x: 1.0 / currentScale, y: 1.0 / currentScale).scaledBy(x: CGFloat(newScale), y: CGFloat(newScale))
+        }) { (finished) in
+            self.resolvePromise(resolveId)
+        }
+    }
+    
     func resolvePromise(_ promiseId: String) {
         webView!.evaluateJavaScript("resolveVideoPromise(\"\(promiseId)\")", completionHandler: nil)
+    }
+    
+    func resolveVideoPromise(_ promiseId: String) {
+        resolvePromise(promiseId)
         self.playingPromiseId = nil
     }
     
-    // IBActions
     
-    @IBAction func recordButtonTapped(_ sender: Any) {
-        
-    }
     
-    @IBAction func videoReviewButtonTapped(_ sender: Any) {
-        
-    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let captureVC = segue.destination as? CaptureViewController {
@@ -208,7 +296,7 @@ extension EditorViewController : PlayerPlaybackDelegate {
     
     func playerPlaybackDidEnd(_ player: Player) {
         if let resolve = self.playingPromiseId {
-            self.resolvePromise(resolve)
+            self.resolveVideoPromise(resolve)
         }
     }
     

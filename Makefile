@@ -25,6 +25,8 @@ build:
 	cp $(SOURCE)/lib/vm/dist/web/scratch-vm.js $(DESTINATION)/lib/vm/dist/web/scratch-vm.js
 	cp $(SOURCE)/lib/vm/dist/web/scratch-vm.min.js $(DESTINATION)/lib/vm/dist/web/scratch-vm.min.js
 	# cp -r $(SOURCE)/lib/audio/audio.js $(DESTINATION)/lib/audio
+	rm -rf $(DESTINATION)/lib/blocks/gh-pages
+	rm -rf $(DESTINATION)/lib/blocks/node_modules
 
 clean:
 	rm -rf $(DESTINATION)

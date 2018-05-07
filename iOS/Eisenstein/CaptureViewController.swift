@@ -10,6 +10,8 @@ import UIKit
 import AVFoundation
 
 class CaptureViewController: UIViewController {
+    
+    static var clipNumber = 1;
 
     @IBOutlet weak var videoPreviewView: UIView!
     @IBOutlet weak var videoPreviewWidthConstraint: NSLayoutConstraint!
@@ -105,7 +107,8 @@ extension CaptureViewController {
                 let moc = self.project!.managedObjectContext!
                 let clip = self.project!.createClip(context: moc)
                 clip.url = lastClip.url!
-                clip.title = "Untitled"
+                clip.title = "Clip \(CaptureViewController.clipNumber)"
+                CaptureViewController.clipNumber += 1
                 
                 let thumb = lastClip.thumbnailImage!
                 let png = UIImagePNGRepresentation(thumb)!
@@ -116,9 +119,14 @@ extension CaptureViewController {
                 try! moc.save()
                 
                 print("created clip")
+                let alert = UIAlertController(title: "Clip saved!", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
             else {
-                print("could not create clip")
+                let alert = UIAlertController(title: "Video not saved!", message: "Uh oh! Try again!", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }

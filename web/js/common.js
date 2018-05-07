@@ -95,13 +95,13 @@
             vm.stopAll();
             // audio.stopAllSounds();
             // audio.clearEffects();
-            // if (typeof window.ext !== 'undefined') {
-            //     window.ext.postMessage({
-            //         extension: 'wedo',
-            //         method: 'motorStop',
-            //         args: []
-            //     });
-            // }
+            if (typeof window.ext !== 'undefined') {
+                window.ext.postMessage({
+                    extension: 'video',
+                    method: 'stopAll',
+                    args: []
+                });
+            }
         });
         stop.addEventListener('touchmove', function (e) {
             e.preventDefault();
@@ -147,6 +147,16 @@
         if (typeof webkit.messageHandlers === 'undefined') return;
         if (typeof webkit.messageHandlers.ext === 'undefined') return;
         window.ext = webkit.messageHandlers.ext;
+
+        // if (typeof webkit.messageHandlers.cons === 'undefined') return;
+        window.cons = webkit.messageHandlers.cons;
+        window.console.log = window.console.error = window.console.warn = window.console.info = (message) => {
+            window.cons.postMessage({
+                message: message
+            });
+        };
+
+        console.log("hello from common!");
     }
 
     // /**
@@ -178,7 +188,7 @@
 
     window.updateVideoMenus = function(videoInfo) {
         var menuItems = videoInfo.map((v, idx) => {
-            return [v.title, idx];
+            return [v.title, idx.toString()];
         })
 
         window.Blockly.Blocks.video_videos_menu.init = function() {

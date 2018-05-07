@@ -1,11 +1,10 @@
 # Todo
 
 - ~~Renaming Clips~~
+- ~~Passing video file names to webview~~
 
 - Webview scrollable workspace
-- Passing video file names to webview
 - Recording UI - provide feedback upon capture and save
-
 - Project creation and selection
 - Block persistence in core data
 

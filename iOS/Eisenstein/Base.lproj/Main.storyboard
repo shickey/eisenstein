@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,9 +24,16 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xcs-u4-9mp">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xcs-u4-9mp">
                                 <rect key="frame" x="408" y="0.0" width="160" height="160"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F2Y-xR-PPg">
+                                        <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVk-14-buv">
@@ -34,7 +41,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <state key="normal" image="browser"/>
                                 <connections>
-                                    <action selector="videoReviewButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="apO-1J-OOm"/>
                                     <segue destination="kx6-WE-KVc" kind="presentation" id="dgB-5p-Wwz"/>
                                 </connections>
                             </button>
@@ -43,7 +49,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <state key="normal" image="videocam"/>
                                 <connections>
-                                    <action selector="recordButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cs7-d0-aNA"/>
                                     <segue destination="Nqg-h5-b2w" kind="presentation" id="5UA-6X-4hX"/>
                                 </connections>
                             </button>
@@ -52,7 +57,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="playerView" destination="Xcs-u4-9mp" id="dVX-og-0oW"/>
+                        <outlet property="playerContainerView" destination="Xcs-u4-9mp" id="Cbk-JK-1K1"/>
+                        <outlet property="playerView" destination="F2Y-xR-PPg" id="xR9-my-yEg"/>
                         <outlet property="webViewContainer" destination="Ryq-pd-5kc" id="OFP-DL-N73"/>
                     </connections>
                 </viewController>
@@ -63,7 +69,6 @@
         <!--Capture View Controller-->
         <scene sceneID="CB7-98-NZC">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dmX-mh-l2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Nqg-h5-b2w" customClass="CaptureViewController" customModule="Eisenstein" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0lR-OQ-Prg">
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
@@ -111,6 +116,7 @@
                         <outlet property="videoPreviewWidthConstraint" destination="MSe-3N-GWa" id="hxJ-N0-uxf"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dmX-mh-l2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="33.75" y="968.66197183098598"/>
         </scene>
@@ -257,6 +263,6 @@
         <image name="videocam" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="niC-Qx-qCu"/>
+        <segue reference="dgB-5p-Wwz"/>
     </inferredMetricsTieBreakers>
 </document>
