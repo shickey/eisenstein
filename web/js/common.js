@@ -23,7 +23,7 @@
         // Get XML toolbox definition
         var toolbox = document.getElementById('toolbox');
         window.toolbox = toolbox;
-        Blockly.VerticalFlyout.prototype.DEFAULT_WIDTH = 210;
+        Blockly.VerticalFlyout.prototype.DEFAULT_WIDTH = 300;
 
         // Instantiate scratch-blocks and attach it to the DOM.
         var workspace = window.Blockly.inject('blocks', {
@@ -36,7 +36,7 @@
             zoom: {
                 controls: false,
                 wheel: false,
-                startScale: 0.7
+                startScale: 1.0
             },
             colours: {
                 workspace: '#334771',
@@ -110,33 +110,7 @@
         // Extension event handlers
         bindExtensionHandler();
 
-        // Audio engine
-        // var audio = new AudioEngine();
-        // window.audio = audio;
-        // loadSoundsFromProject(135074076);
     }
-
-    // /**
-    //  * Load a project
-    //  * @return {void}
-    //  */
-    // function loadProject(id) {
-    //     var url = 'https://projects.scratch.mit.edu/internalapi/project/' +
-    //         id + '/get/';
-    //     var r = new XMLHttpRequest();
-    //     r.onreadystatechange = function() {
-    //         if (this.readyState === 4) {
-    //             if (r.status === 200) {
-    //                 window.vm.loadProject(this.responseText);
-    //                 console.log(window.vm);
-    //             } else {
-    //                 window.vm.createEmptyProject();
-    //             }
-    //         }
-    //     };
-    //     r.open('GET', url);
-    //     r.send();
-    // };
 
     // /**
     //  * Binds the extension interface to `window.ext`.
@@ -159,32 +133,6 @@
         console.log("hello from common!");
     }
 
-    // /**
-    //  * Extension "connect" handler.
-    //  * @return {void}
-    //  */
-    // function onConnect () {
-    //     var di = document.querySelector('#navigation .device button');
-    //     di.classList.add('connected');
-    //     di.classList.remove('scanning');
-    // }
-
-    // /**
-    //  * Extension "disconnect" handler.
-    //  * @return {void}
-    //  */
-    // function onDisconnect () {
-    //     var di = document.querySelector('#navigation .device button');
-    //     di.classList.remove('connected');
-    //     di.classList.remove('scanning');
-    //     vm.stopAll();
-    // }
-
-    // /**
-    //  * fetch the data from a project, but only load the sounds from the stage
-    //  * update the sounds menu with the list of loaded sound names
-    //  * @return {void}
-    //  */
 
     window.updateVideoMenus = function(videoInfo) {
         var menuItems = videoInfo.map((v, idx) => {
@@ -211,71 +159,9 @@
         window.Blockly.getMainWorkspace().updateToolbox(tree);
     }
 
-    // function loadSoundsFromProject(id) {
-    //     var url = 'https://projects.scratch.mit.edu/internalapi/project/' +
-    //         id + '/get/';
-    //     var r = new XMLHttpRequest();
-    //     r.onreadystatechange = function() {
-    //         if (this.readyState === 4) {
-    //             if (r.status === 200) {
-    //                 var respObj = JSON.parse(this.responseText);
-    //                 var sounds = respObj.sounds;
-
-    //                 // populate objects containing metadata about sounds in the project
-    //                 var soundObjs = [];
-    //                 for (var i=0; i<sounds.length; i++) {
-    //                     var soundObj = {};
-    //                     soundObj.fileUrl = 'https://cdn.assets.scratch.mit.edu/internalapi/asset/'
-    //                         + sounds[i].md5 + '/get/';
-    //                     soundObj.name = sounds[i].soundName;
-    //                     soundObj.format = sounds[i].format;
-    //                     soundObjs.push(soundObj);
-    //                 }
-    //                 // load the sounds
-    //                 window.audio.loadSounds(soundObjs);
-
-    //                 // create menu items for blockly in the form [name, index]
-    //                 // containing the names of the loaded sounds
-    //                 var menuItems = [];
-    //                 for (var i=0; i<soundObjs.length; i++) {
-    //                     var item = [soundObjs[i].name, i.toString()];
-    //                     menuItems.push(item);
-    //                 }
-
-    //                 // set the sound block's menu to the new menu
-    //                 window.Blockly.Blocks.sound_sounds_menu.init = function() {
-    //                     this.jsonInit(
-    //                       {
-    //                         "message0": "%1",
-    //                         "args0": [
-    //                           {
-    //                             "type": "field_dropdown",
-    //                             "name": "SOUND_MENU",
-    //                             "options": menuItems
-    //                           }
-    //                         ],
-    //                         "inputsInline": true,
-    //                         "output": "String",
-    //                         "colour": Blockly.Colours.sounds.secondary,
-    //                         "colourSecondary": Blockly.Colours.sounds.secondary,
-    //                         "colourTertiary": Blockly.Colours.sounds.tertiary,
-    //                         "outputShape": Blockly.OUTPUT_SHAPE_ROUND
-    //                       });
-    //                 };
-    //                 var tree = window.Blockly.getMainWorkspace().options.languageTree;
-    //                 window.Blockly.getMainWorkspace().updateToolbox(tree);
-    //             }
-    //         }
-    //     };
-    //     r.open('GET', url);
-    //     r.send();
-    // };
-
     /**
      * Bind event handlers.
      */
     window.onload = onLoad;
-    // window.onExtensionConnect = onConnect;
-    // window.onExtensionDisconnect = onDisconnect;
 
 })();

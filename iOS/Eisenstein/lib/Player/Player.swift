@@ -154,6 +154,16 @@ open class Player: UIViewController {
         set { _ = newValue.map { setupAsset($0) } }
     }
     
+    open var videoComposition: AVVideoComposition? {
+        get { return _videoComposition }
+        set {
+            self._videoComposition = newValue
+            if let playerItem = self._playerItem {
+                playerItem.videoComposition = newValue
+            }
+        }
+    }
+    
     /// Mutes audio playback when true.
     open var muted: Bool {
         get {
@@ -299,6 +309,7 @@ open class Player: UIViewController {
             }
         }
     }
+    internal var _videoComposition: AVVideoComposition?
     internal var _avplayer: AVPlayer
     internal var _playerItem: AVPlayerItem?
     internal var _timeObserver: Any?
@@ -554,6 +565,10 @@ extension Player {
         if let updatedPlayerItem = self._playerItem {
             NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidPlayToEndTime(_:)), name: .AVPlayerItemDidPlayToEndTime, object: updatedPlayerItem)
             NotificationCenter.default.addObserver(self, selector: #selector(playerItemFailedToPlayToEndTime(_:)), name: .AVPlayerItemFailedToPlayToEndTime, object: updatedPlayerItem)
+            
+            if let videoComp = self._videoComposition {
+                self._playerItem?.videoComposition = videoComp
+            }
         }
 
         self._avplayer.replaceCurrentItem(with: self._playerItem)

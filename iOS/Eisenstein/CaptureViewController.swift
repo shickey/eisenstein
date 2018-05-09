@@ -139,6 +139,9 @@ extension CaptureViewController: UIGestureRecognizerDelegate {
         switch gestureRecognizer.state {
         case .began:
             self.recordButtonImageView.isHighlighted = true
+            UIView.animate(withDuration: 0.25) { 
+                self.view.backgroundColor = UIColor(red: 0.15, green: 0.03, blue: 0.0, alpha: 1.0)
+            }
             self.startCapture()
             break
         case .changed:
@@ -149,6 +152,9 @@ extension CaptureViewController: UIGestureRecognizerDelegate {
             fallthrough
         case .failed:
             self.recordButtonImageView.isHighlighted = false
+            UIView.animate(withDuration: 0.25) { 
+                self.view.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+            }
             self.endCapture()
             fallthrough
         default:

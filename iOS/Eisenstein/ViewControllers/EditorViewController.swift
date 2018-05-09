@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 import WebKit
+import AVFoundation
+import Dispatch
 
 //let videoUrl = URL(string: "https://v.cdn.vine.co/r/videos_h264dash/C556231E881379309443162021888_50bad39a8a2.31.0.B933D152-281D-4FD4-A997-7B813C5F91E1.mp4")!
 
@@ -24,7 +26,23 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
     var webView: WKWebView!
     var player = Player()
     
-    var playingPromiseId : String? = nil;
+    var playingPromiseId : String? = nil
+    
+    var filterValues = [
+        "color" : 0,
+        "escher" : 0,
+        "whirl" : 0,
+        "crystallize" : 0,
+        "kaleidoscope" : 0
+    ]
+    
+    var filterColor = CIFilter(name: "CIHueAdjust")!
+    var filterEscher = CIFilter(name: "CIDroste")!
+    var filterWhirl = CIFilter(name: "CITwirlDistortion")!
+    var filterCrystallize = CIFilter(name: "CICrystallize")!
+    var filterKaleidoscope = CIFilter(name: "CITriangleKaleidoscope")!
+    
+    var filterHandler : ((AVAsynchronousCIImageFilteringRequest) -> Void)!
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         get {
@@ -77,7 +95,49 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
         self.playerView.addSubview(self.player.view)
         self.player.didMove(toParentViewController: self)
         
-//        self.player.url = videoUrl
+        // Filter Setup
+        // @TODO: Do this the right way
+        let videoCenter = CIVector(x: 480, y: 480)
+        self.filterWhirl.setValue(videoCenter, forKey: kCIInputCenterKey)
+        self.filterWhirl.setValue(600, forKey: kCIInputRadiusKey)
+        filterHandler = { request in
+            
+            var img = request.sourceImage.clampedToExtent()
+            
+            if self.filterValues["color"] != 0 {
+                self.filterColor.setValue(img, forKey: kCIInputImageKey)
+                if let out = self.filterColor.outputImage {
+                    img = out.cropped(to: request.sourceImage.extent)
+                }
+            }
+            if self.filterValues["escher"] != 0 {
+                self.filterEscher.setValue(img, forKey: kCIInputImageKey)
+                if let out = self.filterEscher.outputImage {
+                    img = out.cropped(to: request.sourceImage.extent)
+                }
+            }
+            if self.filterValues["whirl"] != 0 {
+                self.filterWhirl.setValue(img, forKey: kCIInputImageKey)
+                if let out = self.filterWhirl.outputImage {
+                    img = out.cropped(to: request.sourceImage.extent)
+                }
+            }
+            if self.filterValues["crystallize"] != 0 {
+                self.filterCrystallize.setValue(img, forKey: kCIInputImageKey)
+                if let out = self.filterCrystallize.outputImage {
+                    img = out.cropped(to: request.sourceImage.extent)
+                }
+            }
+            if self.filterValues["kaleidoscope"] != 0 {
+                self.filterKaleidoscope.setValue(img, forKey: kCIInputImageKey)
+                if let out = self.filterKaleidoscope.outputImage {
+                    img = out.cropped(to: request.sourceImage.extent)
+                }
+            }
+            
+            // Provide the filter output to the composition
+            request.finish(with: img, context: nil)
+        }
         
     }
     
@@ -147,8 +207,11 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
                     let clip = project!.clips![videoIndex.intValue] as! Clip
                     let resolveId = body.object(forKey: "resolveId") as! String
                     
+                    let asset = AVURLAsset(url: clip.url!)
+                    
                     self.playingPromiseId = resolveId
-                    self.player.url = clip.url! 
+                    self.player.asset = asset
+                    self.player.videoComposition = AVVideoComposition(asset: asset, applyingCIFiltersWithHandler: filterHandler)
                     self.player.playFromBeginning()
                 }
                 else if (method == "startVideo") {
@@ -160,7 +223,9 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
                         resolveVideoPromise(storedId)
                     }
                     
-                    self.player.url = clip.url!
+                    let asset = AVURLAsset(url: clip.url!)
+                    self.player.asset = asset
+                    self.player.videoComposition = AVVideoComposition(asset: asset, applyingCIFiltersWithHandler: filterHandler)
                     self.player.playFromBeginning()
                     
                     // resolve the promise immediately so the VM
@@ -191,6 +256,90 @@ class EditorViewController: UIViewController, WKScriptMessageHandler {
                     let percentage = body.object(forKey: "percentage") as! NSNumber
                     let resolveId = body.object(forKey: "resolveId") as! String
                     scaleVideo(to: percentage.doubleValue, resolveId: resolveId)
+                }
+                else if (method == "changeEffectBy") {
+                    let effect = body.object(forKey: "effect") as! String
+                    let change = body.object(forKey: "change") as! NSNumber
+                    let resolveId = body.object(forKey: "resolveId") as! String
+                    switch effect {
+                    case "COLOR":
+                        let newValue = (filterValues["color"]! + change.intValue) % 100
+                        filterValues["color"] = newValue
+                        let degreesValue = Double(newValue) * 3.6 // Map 0-100 -> 0-360
+                        filterColor.setValue(degreesToRadians(degreesValue), forKey: kCIInputAngleKey)
+                    case "WHIRL":
+                        var newValue = (filterValues["whirl"]! + change.intValue) % 200
+                        filterValues["whirl"] = newValue
+                        if newValue > 100 {
+                            newValue -= 200 
+                        }
+                        filterWhirl.setValue(degreesToRadians(Double(newValue) * 6.8), forKey: kCIInputAngleKey)
+                    case "CRYSTALLIZE":
+                        let newValue = max(min((filterValues["crystallize"]! + change.intValue), 300), -300)
+                        filterValues["crystallize"] = newValue
+                        filterCrystallize.setValue(newValue, forKey: kCIInputRadiusKey)
+                    case "KALEIDOSCOPE":
+                        let newValue = (filterValues["kaleidoscope"]! + change.intValue) % 100
+                        filterValues["kaleidoscope"] = newValue
+                        let degreesValue = Double(newValue) * 3.6 // Map 0-100 -> 0-360
+                        filterKaleidoscope.setValue(degreesToRadians(degreesValue), forKey: "inputRotation")
+                    default:
+                        print("unknown effect: \(effect)")
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.resolvePromise(resolveId)
+                    }
+                }
+                else if (method == "setEffectTo") {
+                    let effect = body.object(forKey: "effect") as! String
+                    let value = Int(body.object(forKey: "value") as! NSNumber)
+                    let resolveId = body.object(forKey: "resolveId") as! String
+                    switch effect {
+                    case "COLOR":
+                        let newValue = value % 100
+                        filterValues["color"] = newValue
+                        let degreesValue = Double(newValue) * 3.6 // Map 0-100 -> 0-360
+                        filterColor.setValue(degreesToRadians(degreesValue), forKey: kCIInputAngleKey)
+                    case "WHIRL":
+                        var newValue = value % 200
+                        filterValues["whirl"] = newValue
+                        if newValue > 100 {
+                            newValue -= 200 
+                        }
+                        filterWhirl.setValue(degreesToRadians(Double(newValue) * 6.8), forKey: kCIInputAngleKey)
+                    case "CRYSTALLIZE":
+                        let newValue = max(min(value, 300), -300)
+                        filterValues["crystallize"] = newValue
+                        filterCrystallize.setValue(newValue, forKey: kCIInputRadiusKey)
+                    case "KALEIDOSCOPE":
+                        let newValue = value % 100
+                        filterValues["kaleidoscope"] = newValue
+                        let degreesValue = Double(newValue) * 3.6 // Map 0-100 -> 0-360
+                        filterKaleidoscope.setValue(degreesToRadians(degreesValue), forKey: "inputRotation")
+                    default:
+                        print("unknown effect: \(effect)")
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.resolvePromise(resolveId)
+                    }
+                    
+                }
+                else if (method == "clearVideoEffects") {
+                    let resolveId = body.object(forKey: "resolveId") as! String
+                    
+                    filterValues = [
+                        "color" : 0,
+                        "escher" : 0,
+                        "whirl" : 0,
+                        "crystallize" : 0,
+                        "kaleidoscope" : 0
+                    ]
+                    
+                    DispatchQueue.main.async {
+                        self.resolvePromise(resolveId)
+                    }
                 }
                 else if (method == "stopAll") {
                     self.player.stop()

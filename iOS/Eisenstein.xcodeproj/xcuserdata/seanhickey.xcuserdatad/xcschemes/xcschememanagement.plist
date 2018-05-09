@@ -9,10 +9,33 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>Eisenstein.xcscheme</key>
+		<key>Eisenstein-Release.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>Eisenstein.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>A3EC1D7B2040D01400ED3E88</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A3EC1D8F2040D01400ED3E88</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A3EC1D9A2040D01400ED3E88</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
